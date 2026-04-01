@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - QuickDoc</title>
+  <title>Admin Dashboard - QwikDoc</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { theme: { extend: { colors: { primary: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1' }, dark: '#0f172a' }, fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
@@ -16,10 +16,10 @@
   
   <!-- Login Gate -->
   <div id="admin-login-view" class="min-h-screen flex items-center justify-center p-4 bg-slate-900 absolute inset-0 z-50 transition-opacity duration-300">
-    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-md">
-      <div class="bg-primary-600 p-6 text-center">
-        <h2 class="text-2xl font-bold text-white">QuickDoc Admin</h2>
-        <p class="text-primary-100 text-sm opacity-80 mt-1">Restricted Access</p>
+    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-md border border-slate-200">
+      <div class="bg-gradient-to-br from-primary-600 to-primary-700 p-8 text-center">
+        <h2 class="text-2xl font-bold text-white">QwikDoc Admin</h2>
+        <p class="text-primary-100 text-sm opacity-90 mt-1">Restricted Access</p>
       </div>
       <div class="p-8">
         <div id="login-error" class="hidden text-red-600 bg-red-50 p-3 rounded-lg text-sm mb-4 border border-red-200">
@@ -34,7 +34,7 @@
             <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
             <input type="password" id="admin-pass" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500" required>
           </div>
-          <button type="submit" class="w-full bg-primary-600 text-white font-bold py-3 rounded-xl hover:bg-primary-700 transition">
+          <button type="submit" class="w-full bg-primary-600 text-white font-bold py-3 rounded-xl hover:bg-primary-700 transition shadow-lg shadow-primary-500/25">
             Login to Portal
           </button>
         </form>
@@ -43,16 +43,19 @@
   </div>
 
   <!-- Admin Dashboard -->
-  <div id="admin-dashboard-view" class="hidden flex h-screen overflow-hidden bg-slate-50">
+  <div id="admin-dashboard-view" class="hidden flex h-screen overflow-hidden bg-slate-100">
     
-    <!-- Sidebar -->
-    <aside class="w-64 bg-dark text-slate-300 flex flex-col hidden md:flex">
+    <aside class="w-72 bg-dark text-slate-300 flex flex-col shrink-0 border-r border-slate-800 shadow-xl">
       <div class="p-6 border-b border-slate-800">
-        <img src="logo/knockout-logo.png" alt="QuickDoc HQ" class="h-10 w-auto">
+        <img src="logo/knockout-logo.png" alt="QwikDoc HQ" class="h-10 w-auto">
+        <p class="text-xs text-slate-500 mt-2">Operations console</p>
       </div>
-      <nav class="flex-1 p-4 space-y-2">
-        <a href="#" class="block px-4 py-3 bg-primary-600/10 text-primary-400 rounded-xl font-medium">Dashboard</a>
-        <a href="index.html" class="block px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl transition">Back to Site</a>
+      <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+        <button type="button" data-tab="overview" class="admin-nav w-full text-left block px-4 py-3 rounded-xl font-medium bg-primary-600/20 text-primary-300 border border-primary-500/30">Overview</button>
+        <button type="button" data-tab="appointments" class="admin-nav w-full text-left block px-4 py-3 rounded-xl font-medium hover:bg-slate-800 hover:text-white transition">Appointments</button>
+        <button type="button" data-tab="patients" class="admin-nav w-full text-left block px-4 py-3 rounded-xl font-medium hover:bg-slate-800 hover:text-white transition">Patients</button>
+        <button type="button" data-tab="providers" class="admin-nav w-full text-left block px-4 py-3 rounded-xl font-medium hover:bg-slate-800 hover:text-white transition">Providers & clinics</button>
+        <a href="index.html" class="block px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl transition mt-4">Back to Site</a>
       </nav>
       <div class="p-4 border-t border-slate-800">
         <button id="admin-logout-btn" class="w-full text-left px-4 py-2 text-slate-400 hover:text-white transition flex items-center gap-2">
@@ -61,78 +64,139 @@
       </div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
-      <header class="bg-white border-b border-slate-100 h-20 flex items-center px-8 justify-between shrink-0">
-        <h1 class="text-2xl font-bold text-dark">System Overview</h1>
+    <main class="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
+      <header class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between shrink-0">
+        <h1 id="admin-page-title" class="text-xl font-bold text-dark">System overview</h1>
         <div class="flex items-center gap-3">
           <span class="bg-slate-100 px-3 py-1 rounded-full text-sm font-bold text-slate-600">Super Admin</span>
         </div>
       </header>
       
-      <div class="flex-1 overflow-y-auto p-8 relative">
-        <div id="admin-loading" class="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center">
+      <div class="flex-1 overflow-y-auto p-6 relative">
+        <div id="admin-loading" class="absolute inset-0 bg-white/60 backdrop-blur-sm z-10 flex items-center justify-center">
           <div class="spinner w-10 h-10 border-4 border-primary-600 border-t-transparent"></div>
         </div>
 
-        <!-- Dashboard Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <h3 class="text-slate-500 text-sm font-medium mb-1">Total Users (Patients)</h3>
-            <p id="stat-patients" class="text-4xl font-extrabold text-dark">0</p>
+        <div id="panel-overview" class="admin-panel space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div class="premium-card p-6 rounded-2xl border border-slate-100 bg-white">
+              <p class="text-slate-500 text-sm font-medium mb-1">Total Users (Patients)</p>
+              <p id="stat-patients" class="text-3xl font-extrabold text-dark">0</p>
+            </div>
+            <div class="premium-card p-6 rounded-2xl border border-slate-100 bg-white">
+              <p class="text-slate-500 text-sm font-medium mb-1">Total Providers</p>
+              <p id="stat-doctors" class="text-3xl font-extrabold text-dark">0</p>
+            </div>
+            <div class="premium-card p-6 rounded-2xl border border-slate-100 bg-white">
+              <p class="text-slate-500 text-sm font-medium mb-1">Total Clinics</p>
+              <p id="stat-clinics" class="text-3xl font-extrabold text-dark">0</p>
+            </div>
+            <div class="premium-card p-6 rounded-2xl border border-slate-100 bg-white">
+              <p class="text-slate-500 text-sm font-medium mb-1">Total Appointments</p>
+              <p id="stat-appointments" class="text-3xl font-extrabold text-dark">0</p>
+            </div>
           </div>
-          <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <h3 class="text-slate-500 text-sm font-medium mb-1">Total Providers</h3>
-            <p id="stat-doctors" class="text-4xl font-extrabold text-dark">0</p>
+          <div id="rls-warning" class="hidden p-4 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-xl">
+            Note: Appointments or users may show empty if Row Level Security is strictly enforced on the anon key. Use the service role or adjust policies for full admin reads.
           </div>
-          <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <h3 class="text-slate-500 text-sm font-medium mb-1">Total Appointments</h3>
-            <p id="stat-appointments" class="text-4xl font-extrabold text-dark">0</p>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              <div class="px-5 py-4 border-b border-slate-100 bg-slate-50">
+                <h3 class="font-bold text-dark">Recent appointments</h3>
+              </div>
+              <div class="p-4 max-h-64 overflow-y-auto text-sm text-slate-600" id="overview-mini-appts"></div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              <div class="px-5 py-4 border-b border-slate-100 bg-slate-50">
+                <h3 class="font-bold text-dark">Linked providers snapshot</h3>
+              </div>
+              <div class="p-4 max-h-64 overflow-y-auto text-sm text-slate-600" id="overview-mini-docs"></div>
+            </div>
           </div>
         </div>
 
-        <!-- System Logs / Data Tables -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Recent Doctors -->
-          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-            <div class="p-6 border-b border-slate-50">
-              <h3 class="text-lg font-bold text-dark">Approved Providers Directory</h3>
+        <div id="panel-appointments" class="admin-panel hidden">
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="px-4 py-3 border-b border-slate-100 flex flex-wrap gap-2 items-center justify-between bg-slate-50">
+              <h3 class="font-bold text-dark">All appointments</h3>
+              <input type="search" id="filter-appts" placeholder="Filter..." class="px-3 py-2 rounded-lg border border-slate-200 text-sm max-w-xs">
             </div>
             <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm">
-                <thead class="bg-slate-50 text-slate-500 font-medium">
+              <table class="w-full text-left text-sm min-w-[900px]">
+                <thead class="bg-slate-100 text-slate-600 font-semibold">
                   <tr>
-                    <th class="px-6 py-3">Name</th>
-                    <th class="px-6 py-3">Specialty</th>
+                    <th class="px-3 py-3">Patient</th>
+                    <th class="px-3 py-3">Contact</th>
+                    <th class="px-3 py-3">Address</th>
+                    <th class="px-3 py-3">Doctor</th>
+                    <th class="px-3 py-3">Clinic</th>
+                    <th class="px-3 py-3">When</th>
+                    <th class="px-3 py-3">Status</th>
                   </tr>
                 </thead>
-                <tbody id="admin-doctors-list" class="divide-y divide-slate-50">
-                  <!-- Dynamically populated -->
-                </tbody>
+                <tbody id="admin-appts-body" class="divide-y divide-slate-100"></tbody>
               </table>
             </div>
           </div>
+        </div>
 
-          <!-- Appointments -->
-          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-            <div class="p-6 border-b border-slate-50">
-              <h3 class="text-lg font-bold text-dark">System Appointments</h3>
+        <div id="panel-patients" class="admin-panel hidden">
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="px-4 py-3 border-b border-slate-100 bg-slate-50">
+              <h3 class="font-bold text-dark">All patients</h3>
             </div>
             <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm">
-                <thead class="bg-slate-50 text-slate-500 font-medium">
+              <table class="w-full text-left text-sm min-w-[700px]">
+                <thead class="bg-slate-100 text-slate-600 font-semibold">
                   <tr>
-                    <th class="px-6 py-3">Patient</th>
-                    <th class="px-6 py-3">Date/Status</th>
+                    <th class="px-3 py-3">Name</th>
+                    <th class="px-3 py-3">Email</th>
+                    <th class="px-3 py-3">Phone</th>
+                    <th class="px-3 py-3">City / location</th>
                   </tr>
                 </thead>
-                <tbody id="admin-appointments-list" class="divide-y divide-slate-50">
-                  <!-- Dynamically populated -->
-                </tbody>
+                <tbody id="admin-patients-body" class="divide-y divide-slate-100"></tbody>
               </table>
-              <div id="rls-warning" class="hidden p-4 text-xs text-amber-600 bg-amber-50">
-                Note: Appointments/Users may show 0 if Row Level Security (RLS) is strictly enforced on the anon key.
-              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-providers" class="admin-panel hidden space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="px-4 py-3 border-b border-slate-100 bg-slate-50">
+              <h3 class="font-bold text-dark">Providers & venue links</h3>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm min-w-[800px]">
+                <thead class="bg-slate-100 text-slate-600 font-semibold">
+                  <tr>
+                    <th class="px-3 py-3">Doctor</th>
+                    <th class="px-3 py-3">Degree</th>
+                    <th class="px-3 py-3">Specialty</th>
+                    <th class="px-3 py-3">Phone</th>
+                    <th class="px-3 py-3">Linked clinics</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-providers-body" class="divide-y divide-slate-100"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="px-4 py-3 border-b border-slate-100 bg-slate-50">
+              <h3 class="font-bold text-dark">Clinic directory</h3>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm min-w-[700px]">
+                <thead class="bg-slate-100 text-slate-600 font-semibold">
+                  <tr>
+                    <th class="px-3 py-3">Name</th>
+                    <th class="px-3 py-3">Address</th>
+                    <th class="px-3 py-3">Phone</th>
+                    <th class="px-3 py-3">Email</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-clinics-body" class="divide-y divide-slate-100"></tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -141,6 +205,7 @@
   </div>
 
   <script src="js/supabase.js"></script>
+  <script src="js/data.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const loginView = document.getElementById('admin-login-view');
@@ -149,8 +214,11 @@
       const errBox = document.getElementById('login-error');
       const logoutBtn = document.getElementById('admin-logout-btn');
 
-      // Check Session Storage
-      if (sessionStorage.getItem('quickdoc_admin_auth') === 'true') {
+      function authed() {
+        return sessionStorage.getItem('quickdoc_admin_auth') === 'true' || sessionStorage.getItem('qwikdoc_admin_auth') === 'true';
+      }
+
+      if (authed()) {
         showDashboard();
       }
 
@@ -159,9 +227,9 @@
         const user = document.getElementById('admin-user').value.trim();
         const pass = document.getElementById('admin-pass').value;
 
-        // Hardcoded secure check as requested
         if (user === 'Admin@quickdoc' && pass === 'Quickdoc@2026') {
           sessionStorage.setItem('quickdoc_admin_auth', 'true');
+          sessionStorage.setItem('qwikdoc_admin_auth', 'true');
           showDashboard();
         } else {
           errBox.classList.remove('hidden');
@@ -170,6 +238,7 @@
 
       logoutBtn.addEventListener('click', () => {
         sessionStorage.removeItem('quickdoc_admin_auth');
+        sessionStorage.removeItem('qwikdoc_admin_auth');
         window.location.reload();
       });
 
@@ -179,62 +248,140 @@
         loadData();
       }
 
+      const titles = {
+        overview: 'System overview',
+        appointments: 'Appointments',
+        patients: 'Patients',
+        providers: 'Providers & clinics'
+      };
+
+      function setTab(tab) {
+        document.querySelectorAll('.admin-panel').forEach((el) => el.classList.add('hidden'));
+        document.getElementById('panel-' + tab).classList.remove('hidden');
+        document.getElementById('admin-page-title').textContent = titles[tab] || 'Admin';
+        document.querySelectorAll('.admin-nav').forEach((btn) => {
+          const is = btn.getAttribute('data-tab') === tab;
+          btn.className = 'admin-nav w-full text-left block px-4 py-3 rounded-xl font-medium transition ' +
+            (is ? 'bg-primary-600/20 text-primary-300 border border-primary-500/30' : 'hover:bg-slate-800 hover:text-white');
+        });
+      }
+
+      document.querySelectorAll('.admin-nav').forEach((btn) => {
+        btn.addEventListener('click', () => setTab(btn.getAttribute('data-tab')));
+      });
+
+      let apptsCache = [];
+      let patientsCache = [];
+
+      document.getElementById('filter-appts')?.addEventListener('input', (e) => {
+        const q = (e.target.value || '').toLowerCase();
+        renderApptsTable(apptsCache.filter((a) => {
+          const blob = [a.patient_name, a.patient_email, a.patient_phone, a.patient_address, a.doctor?.name, a.clinic?.name].join(' ').toLowerCase();
+          return !q || blob.includes(q);
+        }));
+      });
+
+      function renderApptsTable(rows) {
+        const apptList = document.getElementById('admin-appts-body');
+        if (!rows || rows.length === 0) {
+          apptList.innerHTML = `<tr><td colspan="7" class="px-3 py-6 text-center text-slate-400">No appointments</td></tr>`;
+          return;
+        }
+        apptList.innerHTML = rows.map((a) => `
+          <tr class="hover:bg-slate-50/80">
+            <td class="px-3 py-3 font-medium text-dark">${a.patient_name || '—'}</td>
+            <td class="px-3 py-3 text-slate-600 text-xs">${a.patient_email || ''}<br>${a.patient_phone || ''}</td>
+            <td class="px-3 py-3 text-slate-600 text-xs max-w-[220px]">${a.patient_address || '—'}</td>
+            <td class="px-3 py-3 text-xs">${a.doctor?.name || '—'}${a.doctor?.degree ? `<div class="text-slate-500">${a.doctor.degree}</div>` : ''}</td>
+            <td class="px-3 py-3 text-xs">${a.clinic?.name || '—'}${a.clinic?.address ? `<div class="text-slate-500">${a.clinic.address}</div>` : ''}</td>
+            <td class="px-3 py-3 whitespace-nowrap text-xs">${a.date} ${a.time}</td>
+            <td class="px-3 py-3"><span class="text-xs font-bold uppercase ${a.status === 'completed' ? 'text-green-600' : a.status === 'cancelled' ? 'text-red-600' : 'text-blue-600'}">${a.status}</span></td>
+          </tr>
+        `).join('');
+      }
+
       async function loadData() {
         try {
           const loadingIndicator = document.getElementById('admin-loading');
-          
-          // 1. Fetch Doctors (Public API)
-          const { data: docs, error: docErr } = await supabase.from('doctors').select('*');
-          
-          // 2. Fetch Users (Might return [] if RLS blocks read-all)
-          const { data: users, error: userErr } = await supabase.from('users').select('*').eq('role', 'patient');
-          
-          // 3. Fetch Appointments (Might return [] if RLS blocks read-all)
-          const { data: appts, error: apptErr } = await supabase.from('appointments').select('*');
 
-          // Update summary counts
-          if(docs) document.getElementById('stat-doctors').textContent = docs.length;
-          if(users) document.getElementById('stat-patients').textContent = users.length;
-          if(appts) document.getElementById('stat-appointments').textContent = appts.length;
+          const [docsRes, patients, appts, clinics, doctorsFull] = await Promise.all([
+            supabase.from('doctors').select('*', { count: 'exact', head: true }),
+            DataService.getAdminPatients(),
+            DataService.getAdminAppointmentsFull(),
+            DataService.getClinics(),
+            DataService.getAdminDoctorsWithClinics()
+          ]);
 
-          // If RLS blocked appts/users (empty array but no error thrown usually, or throws an error)
-          if ((!users || users.length === 0) && (!appts || appts.length === 0)) {
+          const docCount = docsRes.count != null ? docsRes.count : (doctorsFull?.length || 0);
+          document.getElementById('stat-doctors').textContent = docCount;
+          document.getElementById('stat-patients').textContent = (patients && patients.length) || 0;
+          document.getElementById('stat-appointments').textContent = (appts && appts.length) || 0;
+          document.getElementById('stat-clinics').textContent = (clinics && clinics.length) || 0;
+
+          apptsCache = appts || [];
+          patientsCache = patients || [];
+
+          if ((!patients || patients.length === 0) && (!appts || appts.length === 0)) {
             document.getElementById('rls-warning').classList.remove('hidden');
           }
 
-          // Render Doctors Table
-          const docList = document.getElementById('admin-doctors-list');
-          if (docs && docs.length > 0) {
-            docList.innerHTML = docs.slice(0, 10).map(d => `
-              <tr class="hover:bg-slate-50/50">
-                <td class="px-6 py-4 font-bold text-dark">${d.name}</td>
-                <td class="px-6 py-4 text-slate-500">${d.specialization}</td>
-              </tr>
-            `).join('');
-          } else {
-            docList.innerHTML = `<tr><td colspan="2" class="px-6 py-4 text-center text-slate-400">No doctors found</td></tr>`;
-          }
+          renderApptsTable(apptsCache);
 
-          // Render Appointments Table
-          const apptList = document.getElementById('admin-appointments-list');
-          if (appts && appts.length > 0) {
-            apptList.innerHTML = appts.slice(0, 10).map(a => `
-              <tr class="hover:bg-slate-50/50">
-                <td class="px-6 py-4 font-bold text-dark">${a.patient_name || 'Anonymous'}</td>
-                <td class="px-6 py-4">
-                  <div class="text-slate-800 font-medium">${a.date}</div>
-                  <div class="text-xs uppercase font-bold ${a.status === 'completed' ? 'text-green-500' : (a.status === 'cancelled' ? 'text-red-500' : 'text-blue-500')}">${a.status}</div>
-                </td>
+          document.getElementById('admin-patients-body').innerHTML = (patients && patients.length) ? patients.map((p) => `
+            <tr class="hover:bg-slate-50/80">
+              <td class="px-3 py-3 font-medium">${p.name || '—'}</td>
+              <td class="px-3 py-3 text-xs text-slate-600">${p.email || ''}</td>
+              <td class="px-3 py-3 text-xs">${p.phone || '—'}</td>
+              <td class="px-3 py-3 text-xs">${[p.city, p.location].filter(Boolean).join(' · ') || '—'}</td>
+            </tr>
+          `).join('') : `<tr><td colspan="4" class="px-3 py-6 text-center text-slate-400">No patients (or RLS restricted)</td></tr>`;
+
+          document.getElementById('admin-providers-body').innerHTML = (doctorsFull && doctorsFull.length) ? doctorsFull.map((d) => {
+            const links = d.doctor_clinic_links || [];
+            const clinicHtml = links.map((l) => {
+              const cn = l.clinic?.name || 'Clinic';
+              const sch = l.schedule ? `<span class="text-slate-500">${l.schedule}</span>` : '';
+              return `<div class="mb-1 border-b border-slate-100 pb-1 last:border-0"><span class="font-medium text-slate-800">${cn}</span> ${sch ? `<div class="text-xs">${sch}</div>` : ''}</div>`;
+            }).join('') || '—';
+            return `
+              <tr class="hover:bg-slate-50/80 align-top">
+                <td class="px-3 py-3 font-medium">${d.name}</td>
+                <td class="px-3 py-3 text-xs">${d.degree || '—'}</td>
+                <td class="px-3 py-3 text-xs">${d.specialization || ''}</td>
+                <td class="px-3 py-3 text-xs">${d.phone || '—'}</td>
+                <td class="px-3 py-3 text-xs max-w-md">${clinicHtml}</td>
               </tr>
-            `).join('');
-          } else {
-            apptList.innerHTML = `<tr><td colspan="2" class="px-6 py-4 text-center text-slate-400">No appointments tracking (or RLS restricted)</td></tr>`;
-          }
+            `;
+          }).join('') : `<tr><td colspan="5" class="px-3 py-6 text-center text-slate-400">No providers</td></tr>`;
+
+          document.getElementById('admin-clinics-body').innerHTML = (clinics && clinics.length) ? clinics.map((c) => `
+            <tr class="hover:bg-slate-50/80">
+              <td class="px-3 py-3 font-medium">${c.name}</td>
+              <td class="px-3 py-3 text-xs text-slate-600">${c.address || ''} ${c.pin ? `(${c.pin})` : ''}</td>
+              <td class="px-3 py-3 text-xs">${c.phone || '—'}</td>
+              <td class="px-3 py-3 text-xs">${c.email || '—'}</td>
+            </tr>
+          `).join('') : `<tr><td colspan="4" class="px-3 py-6 text-center text-slate-400">No clinics</td></tr>`;
+
+          const miniAppts = (appts || []).slice(0, 8);
+          document.getElementById('overview-mini-appts').innerHTML = miniAppts.length ? miniAppts.map((a) => `
+            <div class="mb-3 pb-3 border-b border-slate-100 last:border-0">
+              <span class="font-semibold text-dark">${a.patient_name}</span>
+              <span class="text-slate-500"> · ${a.date} ${a.time}</span>
+              <div class="text-xs text-slate-500">Dr. ${a.doctor?.name || '—'} @ ${a.clinic?.name || '—'}</div>
+            </div>
+          `).join('') : '<p class="text-slate-400">No recent appointments</p>';
+
+          const miniDocs = (doctorsFull || []).slice(0, 6);
+          document.getElementById('overview-mini-docs').innerHTML = miniDocs.length ? miniDocs.map((d) => {
+            const n = (d.doctor_clinic_links || []).length;
+            return `<div class="mb-2">${d.name} (${d.specialization}) — ${n} venue link(s)</div>`;
+          }).join('') : '<p class="text-slate-400">No providers</p>';
 
           loadingIndicator.classList.add('hidden');
-          
         } catch (e) {
-          console.error("Failed to load admin dashboard data", e);
+          console.error('Failed to load admin dashboard data', e);
+          document.getElementById('admin-loading')?.classList.add('hidden');
         }
       }
     });

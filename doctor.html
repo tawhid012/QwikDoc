@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doctor Profile - QuickDoc</title>
+  <title>Doctor Profile - QwikDoc</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { theme: { extend: { colors: { primary: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1' }, dark: '#0f172a' }, fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
@@ -19,8 +19,8 @@
       <div class="flex justify-between items-center h-20">
         <div class="flex-shrink-0 flex items-center">
           <a href="index.html" class="flex items-center group">
-            <img src="logo/primary.png" alt="QuickDoc Logo" class="h-14 w-auto hidden md:block object-contain">
-            <img src="logo/icon.png" alt="QuickDoc Icon" class="h-12 w-auto md:hidden object-contain">
+            <img src="logo/primary.png" alt="QwikDoc Logo" class="h-14 w-auto hidden md:block object-contain">
+            <img src="logo/icon.png" alt="QwikDoc Icon" class="h-12 w-auto md:hidden object-contain">
           </a>
         </div>
         <div class="hidden md:flex items-center space-x-4" id="auth-menu-container"></div>
@@ -74,7 +74,7 @@
               
               <div class="pt-4 md:pt-6 flex-grow flex flex-col md:flex-row justify-between gap-6">
                 <div>
-                  <h1 class="text-3xl font-extrabold text-dark mb-2">${doc.name}</h1>
+                  <h1 class="text-3xl font-extrabold text-dark mb-2">${doc.name}${doc.degree ? `<span class="text-xl font-bold text-slate-600 ml-2">(${doc.degree})</span>` : ''}</h1>
                   <p class="text-lg text-primary-600 font-medium mb-4">${doc.specialization}</p>
                   <div class="flex flex-wrap gap-4 text-sm font-medium text-slate-600">
                     <span class="flex items-center gap-1"><span class="text-yellow-500">★</span> ${parseFloat(doc.rating).toFixed(1)} (${doc.reviews} Reviews)</span>
@@ -100,6 +100,13 @@
                 <h2 class="text-xl font-bold text-dark mb-4">About the Doctor</h2>
                 <p class="text-slate-600 leading-relaxed font-medium">${doc.about || 'A dedicated medical professional.'}</p>
               </div>
+
+              ${doc.languages_fluent ? `
+              <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 hover-float">
+                <h2 class="text-xl font-bold text-dark mb-4">Languages</h2>
+                <p class="text-slate-600 leading-relaxed font-medium">${doc.languages_fluent}</p>
+              </div>
+              ` : ''}
 
               ${venues.length > 0 ? `
               <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 hover-float">

@@ -7,7 +7,7 @@ const DataService = {
     // Also fetch doctor_clinic_links (venues) to filter out doctors without clinics
     const { data, error } = await supabase
       .from('doctors')
-      .select('id, name, specialization, experience, consultation_fee, rating, image, city, availability, doctor_venues:doctor_clinic_links(clinic:clinics(name, pin))')
+      .select('id, name, specialization, degree, languages_fluent, experience, consultation_fee, rating, image, city, availability, doctor_venues:doctor_clinic_links(clinic:clinics(name, pin))')
       .order('rating', { ascending: false });
     
     if (error) {
@@ -300,6 +300,54 @@ const DataService = {
   },
 
   // Clinic Dashboard: appointments filtered by doctor
+  getAdminPatients: async () => {
+    const { data, error } = await supabase
+      .from('users')
+      .select('id, name, email, phone, city, location, role, created_at')
+      .eq('role', 'patient')
+      .order('created_at', { ascending: false });
+    if (error) {
+      console.error('Error fetching patients:', error);
+      return [];
+    }
+    return data || [];
+  },
+
+  getAdminAppointmentsFull: async () => {
+    const { data, error } = await supabase
+      .from('appointments')
+      .select(`
+        *,
+        doctor:doctors(id, name, specialization, degree, phone),
+        clinic:clinics(id, name, address, pin, phone, email)
+      `)
+      .order('created_at', { ascending: false });
+    if (error) {
+      console.error('Error fetching admin appointments:', error);
+      return [];
+    }
+    return data || [];
+  },
+
+  getAdminDoctorsWithClinics: async () => {
+    const { data, error } = await supabase
+      .from('doctors')
+      .select(`
+        *,
+        doctor_clinic_links(
+          id,
+          schedule,
+          clinic:clinics(id, name, address, pin, phone)
+        )
+      `)
+      .order('name', { ascending: true });
+    if (error) {
+      console.error('Error fetching admin doctors:', error);
+      return [];
+    }
+    return data || [];
+  },
+
   getClinicAppointmentsByDoctor: async (clinicId, doctorId) => {
     const { data, error } = await supabase
       .from('appointments')

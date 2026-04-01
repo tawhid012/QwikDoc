@@ -42,6 +42,8 @@ CREATE TABLE IF NOT EXISTS public.doctors (
   pin TEXT,
   phone TEXT,
   availability TEXT[] DEFAULT '{}',
+  degree TEXT,
+  languages_fluent TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -79,6 +81,7 @@ CREATE TABLE IF NOT EXISTS public.appointments (
   date DATE NOT NULL,
   time TEXT NOT NULL,
   reason TEXT,
+  patient_address TEXT,
   status TEXT DEFAULT 'upcoming' CHECK (status IN ('upcoming', 'completed', 'cancelled')),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -95,6 +98,15 @@ BEGIN
     END IF;
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='doctors' AND column_name='availability') THEN
         ALTER TABLE public.doctors ADD COLUMN availability TEXT[] DEFAULT '{}';
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='doctors' AND column_name='degree') THEN
+        ALTER TABLE public.doctors ADD COLUMN degree TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='doctors' AND column_name='languages_fluent') THEN
+        ALTER TABLE public.doctors ADD COLUMN languages_fluent TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='appointments' AND column_name='patient_address') THEN
+        ALTER TABLE public.appointments ADD COLUMN patient_address TEXT;
     END IF;
 END $$;
 
