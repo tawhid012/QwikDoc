@@ -128,6 +128,9 @@ BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename='users' AND policyname='Users can update own profile') THEN
         CREATE POLICY "Users can update own profile" ON public.users FOR UPDATE USING (auth.uid() = id);
     END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename='users' AND policyname='Anon can list patients for admin dashboard') THEN
+        CREATE POLICY "Anon can list patients for admin dashboard" ON public.users FOR SELECT TO anon USING (role = 'patient');
+    END IF;
 
     -- Doctors Policies
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename='doctors' AND policyname='Public can view doctors') THEN
@@ -167,6 +170,9 @@ BEGIN
     -- Appointments Policies
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename='appointments' AND policyname='Users view own appointments') THEN
         CREATE POLICY "Users view own appointments" ON public.appointments FOR SELECT USING (auth.uid() = patient_id OR auth.uid() = doctor_id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename='appointments' AND policyname='Anon can list appointments for admin dashboard') THEN
+        CREATE POLICY "Anon can list appointments for admin dashboard" ON public.appointments FOR SELECT TO anon USING (true);
     END IF;
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename='appointments' AND policyname='Patients can insert appointments') THEN
         CREATE POLICY "Patients can insert appointments" ON public.appointments FOR INSERT WITH CHECK (auth.uid() = patient_id);

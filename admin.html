@@ -96,8 +96,8 @@
               <p id="stat-appointments" class="text-3xl font-extrabold text-dark">0</p>
             </div>
           </div>
-          <div id="rls-warning" class="hidden p-4 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-xl">
-            Note: Appointments or users may show empty if Row Level Security is strictly enforced on the anon key. Use the service role or adjust policies for full admin reads.
+          <div id="rls-warning" class="hidden p-4 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
+            <p>Note: If patients or appointments still look empty, open this page in a private window while signed out of the patient site (the admin uses the anon key; an active login uses a different role). In Supabase, run <code class="text-xs bg-amber-100 px-1 rounded">supabase_rls_admin_anon_read.sql</code> so anon can list patients and appointments for this dashboard.</p>
           </div>
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
