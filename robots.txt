@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /user-dashboard.html
+Disallow: /doctor-dashboard.html
+Disallow: /clinic-dashboard.html
+Disallow: /booking.html
+
+Sitemap: https://qwikdoc.in/sitemap.xml

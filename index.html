@@ -5,11 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- SEO & Open Graph -->
-  <title>QwikDoc - Find the Right Doctor Near You Instantly</title>
+  <!-- SEO & AI Discoverability -->
+  <title>Find Doctors Near You | Book Appointments Online - QwikDoc</title>
   <meta name="description"
-    content="Book doctor appointments online. Find top-rated dentists, dermatologists, and general physicians near you quickly and securely.">
-  <meta name="keywords" content="doctor booking near me, book appointment online, find doctors, healthcare platform">
+    content="Search and book appointments with trusted doctors and clinics near you. Fast, easy, and reliable healthcare platform. Find the best doctor near me instantly.">
+  <meta name="keywords" content="doctor booking near me, book doctor appointment online, find doctors near me, best clinic near me, online doctor consultation">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0ea5e9">
 
   <!-- Supabase & Styling -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -20,41 +22,46 @@
   <link rel="icon" type="image/png" href="logo/icon.png">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- AI SEO Schemas -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "MedicalBusiness",
-    "name": "QwikDoc",
-    "description": "Healthcare appointment platform to find the best doctors near you and book appointments online.",
-    "url": "https://qwikdoc.example.com",
-    "logo": "https://qwikdoc.example.com/logo.png"
-  }
-  </script>
+  <!-- AI SEO & Structured Data -->
+  <script src="js/seo-schema.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [{
       "@type": "Question",
-      "name": "How do I book a doctor appointment online?",
+      "name": "How to book a doctor appointment online?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Simply search for a doctor by specialty or location, select a time slot from their profile, and confirm your booking instantly through QwikDoc."
+        "text": "Booking is easy! Use our search bar to find doctors near you, select a convenient time slot on their profile, and click 'Confirm Appointment'. It takes less than 2 minutes."
       }
     }, {
       "@type": "Question",
-      "name": "Are the doctors on QwikDoc verified?",
+      "name": "How do I find the best doctor near me?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, all medical professionals on QwikDoc undergo a strict verification process to ensure they are licensed and qualified to provide care."
+        "text": "Simply enter your specialty needs and location in the QwikDoc search bar. We'll show you verified doctors with real patient reviews to help you choose the best provider."
       }
     }, {
       "@type": "Question",
-      "name": "Is it free to use QwikDoc?",
+      "name": "Can I book appointments with a local clinic?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Using QwikDoc to search and book appointments is completely free. You only pay the consultation fee directly to the doctor or clinic."
+        "text": "Yes, QwikDoc allows you to book directly with specific clinic venues where your preferred doctors are available."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Is there a fee for booking online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "QwikDoc is free for patients to search and book. You only pay the standard consultation fee at the doctor's office or clinic."
+      }
+    }, {
+      "@type": "Question",
+      "name": "What if I need to cancel my appointment?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can manage or cancel your bookings directly through your User Dashboard. We recommend cancelling at least 24 hours in advance."
       }
     }]
   }
@@ -69,11 +76,11 @@
     class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
-            <img src="logo/primary.png" alt="QwikDoc Logo" class="h-14 w-auto object-contain">
+            <img src="logo/primary.png" alt="QwikDoc Logo - Book Doctor Appointments Online" class="h-14 w-auto object-contain" loading="lazy">
         <nav class="hidden md:flex items-center space-x-8">
-          <a href="search.html" class="font-medium hover:text-primary-600 text-slate-700 transition">Find Doctors</a>
+          <a href="search.html" class="font-medium hover:text-primary-600 text-slate-700 transition">Search Best Doctors</a>
           <a href="#how-it-works" class="font-medium hover:text-primary-600 text-slate-700 transition">How it Works</a>
-          <a href="#faq" class="font-medium hover:text-primary-600 text-slate-700 transition">FAQ</a>
+          <a href="#faq" class="font-medium hover:text-primary-600 text-slate-700 transition">Doctor Booking FAQ</a>
         </nav>
         <div class="hidden md:flex items-center space-x-4" id="auth-menu-container"></div>
         <div class="md:hidden flex items-center"><button id="mobile-menu-btn" class="focus:outline-none"><svg
@@ -114,7 +121,7 @@
         </span>
         <h1 class="text-3xl md:text-6xl lg:text-7xl font-extrabold text-dark tracking-tight mb-6 leading-tight fade-in"
           style="animation-delay: 0.1s;">
-          Find the Right Doctor<br /> Near You <span class="text-primary-500 relative inline-block">Instantly
+          Find the Best Doctors<br /> Near You <span class="text-primary-500 relative inline-block">Instantly
             <svg class="absolute w-full h-4 -bottom-1 left-0 text-primary-200 -z-10" viewBox="0 0 100 10"
               preserveAspectRatio="none">
               <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="transparent" />
@@ -352,7 +359,7 @@
           </div>
           <div class="hidden lg:block">
             <img src="https://i.postimg.cc/Kj7HWSDZ/Unknown-3.jpg"
-              class="rounded-3xl shadow-2xl border-4 border-slate-800 lazy-load" alt="Happy Doctor">
+              class="rounded-3xl shadow-2xl border-4 border-slate-800" alt="Book Doctor Appointments Online - QwikDoc" loading="lazy">
           </div>
         </div>
       </div>
@@ -367,14 +374,13 @@
         </div>
 
         <div class="space-y-4">
-          <!-- Accordion item -->
           <div
             class="border border-slate-200 rounded-2xl p-6 hover:shadow-md transition-shadow cursor-pointer faq-item">
             <h4 class="text-lg font-bold text-dark flex justify-between items-center">
-              How do I book a doctor appointment online?
+              How to book a doctor appointment online?
               <span class="text-primary-600">+</span>
             </h4>
-            <p class="text-slate-600 mt-4 hidden">Easily find a doctor by Doctor name , specialty and location. Browse their profile, choose a suitable time slot, and book your appointment instantly through our platform.</p>
+            <p class="text-slate-600 mt-4 hidden">Simply search for a doctor by specialty or location, browse their profile, choose a suitable time slot, and confirm your booking instantly through QwikDoc. It's the best way to find a doctor near you.</p>
           </div>
           <div
             class="border border-slate-200 rounded-2xl p-6 hover:shadow-md transition-shadow cursor-pointer faq-item">
@@ -382,8 +388,8 @@
               Are the doctors on QwikDoc verified?
               <span class="text-primary-600">+</span>
             </h4>
-            <p class="text-slate-600 mt-4 hidden">Yes, all medical professionals undergo a strict verification process
-              to ensure they hold proper licenses and credentials.</p>
+            <p class="text-slate-600 mt-4 hidden">Yes, every medical professional undergoes a strict verification process
+              to ensure they hold valid licenses and credentials before they can be listed.</p>
           </div>
           <div
             class="border border-slate-200 rounded-2xl p-6 hover:shadow-md transition-shadow cursor-pointer faq-item">
@@ -391,8 +397,24 @@
               Is it free to use QwikDoc?
               <span class="text-primary-600">+</span>
             </h4>
-            <p class="text-slate-600 mt-4 hidden">Our platform is 100% free for patients to search and book. You only
-              pay the consultation fee directly to your doctor at the time of your visit.</p>
+            <p class="text-slate-600 mt-4 hidden">QwikDoc is 100% free for patients. You only
+              pay the standard consultation fee directly at the clinic or hospital.</p>
+          </div>
+          <div
+            class="border border-slate-200 rounded-2xl p-6 hover:shadow-md transition-shadow cursor-pointer faq-item">
+            <h4 class="text-lg font-bold text-dark flex justify-between items-center">
+              Can I find a doctor near me instantly?
+              <span class="text-primary-600">+</span>
+            </h4>
+            <p class="text-slate-600 mt-4 hidden">Yes! Use our real-time search to see available specialists in your city or zip code and book an appointment for the same day or a later date.</p>
+          </div>
+          <div
+            class="border border-slate-200 rounded-2xl p-6 hover:shadow-md transition-shadow cursor-pointer faq-item">
+            <h4 class="text-lg font-bold text-dark flex justify-between items-center">
+              How do I find a pediatrician for my child?
+              <span class="text-primary-600">+</span>
+            </h4>
+            <p class="text-slate-600 mt-4 hidden">Navigate to our search page, select 'Pediatrician' from the specialty list or search for it directly to find child care specialists in your area.</p>
           </div>
         </div>
       </div>
@@ -425,7 +447,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         <div>
           <a href="index.html" class="block mb-6">
-            <img src="logo/knockout-logo.png" alt="QwikDoc Logo" class="h-20 w-auto object-contain">
+            <img src="logo/knockout-logo.png" alt="QwikDoc Logo - Online Doctor Booking" class="h-20 w-auto object-contain" loading="lazy">
           </a>
           <p class="text-slate-400 mb-6 leading-relaxed">Making healthcare accessible, transparent, and hassle-free. The
             smart way to find a doctor.</p>
@@ -434,8 +456,8 @@
         <div>
           <h4 class="text-white font-bold text-lg mb-6 tracking-wide">Patients</h4>
           <ul class="space-y-4 font-medium">
-            <li><a href="search.html" class="hover:text-primary-400 transition-colors">Find a Doctor</a></li>
-            <li><a href="login.html" class="hover:text-primary-400 transition-colors">Book an Appointment</a></li>
+            <li><a href="search.html" class="hover:text-primary-400 transition-colors">Book Doctor Near Me</a></li>
+            <li><a href="login.html" class="hover:text-primary-400 transition-colors">Confirm Medical Appointment</a></li>
             <li><a href="user-dashboard.html" class="hover:text-primary-400 transition-colors">My Appointments</a></li>
           </ul>
         </div>
@@ -510,7 +532,7 @@
           const docsHtml = doctors.slice(0, 3).map(doc => `
             <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover-float transition-all flex flex-col group">
               <div class="h-64 overflow-hidden relative">
-                <img src="${doc.image || 'https://via.placeholder.com/400'}" alt="${doc.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 lazy-load">
+                <img src="${doc.image || 'https://via.placeholder.com/400'}" alt="${doc.name} - ${doc.specialization}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
                 <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-xl text-sm font-bold text-dark flex items-center gap-1 shadow-lg">
                   <span class="text-yellow-500">★</span> ${doc.rating}
                 </div>

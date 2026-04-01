@@ -1,0 +1,21 @@
+{
+  "name": "QwikDoc - Doctor Booking",
+  "short_name": "QwikDoc",
+  "description": "Book doctor appointments online instantly with trusted healthcare providers near you.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "logo/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

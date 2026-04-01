@@ -36,56 +36,109 @@
   <main class="flex-grow pt-28 pb-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
+      <!-- Welcome Header -->
+      <div class="mb-10 fade-in">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-dark tracking-tight">Your Health <span class="text-primary-600">Overview</span></h1>
+        <p class="text-slate-500 font-medium mt-2">Welcome back, <span id="welcome-name" class="text-dark font-bold">Patient</span>. You have <span id="appt-count-stat" class="text-primary-600 font-bold">0</span> upcoming appointments.</p>
+      </div>
+
       <div class="flex flex-col lg:flex-row gap-8">
         
-        <!-- Sidebar -->
-        <div class="w-full lg:w-1/4 mb-8 lg:mb-0">
-          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 sticky top-28 fade-in">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-16 h-16 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center text-2xl font-bold" id="user-avatar">?</div>
-              <div>
-                <h2 class="font-bold text-dark text-lg" id="user-name">Loading...</h2>
-                <p class="text-sm text-slate-500" id="user-role">Patient Account</p>
-              </div>
+        <!-- Sidebar Navigation (Desktop) -->
+        <div class="hidden lg:block w-full lg:w-64 shrink-0">
+          <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl shadow-slate-200/50 border border-white p-6 sticky top-28 fade-in">
+            <div class="flex flex-col items-center text-center mb-8 pb-8 border-b border-slate-100">
+              <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 text-white flex items-center justify-center text-3xl font-bold mb-4 shadow-lg shadow-primary-500/20" id="user-avatar">?</div>
+              <h2 class="font-bold text-dark text-xl leading-tight" id="user-name">Loading...</h2>
+              <span class="mt-2 px-3 py-1 bg-primary-50 text-primary-700 text-xs font-bold rounded-full uppercase tracking-wider">Patient</span>
             </div>
             
-            <nav class="space-y-2 mb-8">
-              <a href="user-dashboard.html" class="flex items-center gap-3 px-4 py-3 bg-primary-50 text-primary-700 rounded-xl font-medium transition">
+            <nav class="space-y-2">
+              <a href="user-dashboard.html" class="flex items-center gap-3 px-4 py-3 bg-primary-600 text-white rounded-2xl font-bold shadow-lg shadow-primary-500/30 transition-all hover:scale-[1.02] active:scale-95">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                My Appointments
+                Appointments
               </a>
-              <a href="search.html" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl font-medium transition">
+              <a href="search.html" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-primary-600 rounded-2xl font-bold transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 Find Doctors
               </a>
+              <div class="my-4 border-t border-slate-50"></div>
+              <button onclick="AuthService.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-2xl font-bold transition-all text-left">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                Logout
+              </button>
             </nav>
-
-            <button onclick="AuthService.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl font-medium transition text-left">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-              Logout
-            </button>
           </div>
         </div>
 
         <!-- Main Content -->
-        <div class="w-full lg:w-3/4 fade-in" style="animation-delay: 0.1s;">
-          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 sm:p-8 min-h-[500px]">
-            <div class="flex justify-between items-center mb-8 border-b border-slate-100 pb-4">
-              <h2 class="text-2xl font-bold text-dark">Upcoming Appointments</h2>
+        <div class="flex-grow fade-in" style="animation-delay: 0.1s;">
+          
+          <!-- Quick Stats Row -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <div class="bg-white/80 backdrop-blur-md p-6 rounded-3xl border border-white shadow-sm hover:shadow-md transition-all group">
+              <span class="text-slate-400 text-sm font-bold uppercase tracking-widest block mb-2">Upcoming</span>
+              <div class="flex items-end gap-2">
+                <span class="text-4xl font-extrabold text-dark group-hover:text-primary-600 transition-colors" id="stat-upcoming">0</span>
+                <span class="text-slate-400 font-bold mb-1 text-sm">active</span>
+              </div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-md p-6 rounded-3xl border border-white shadow-sm hover:shadow-md transition-all group">
+              <span class="text-slate-400 text-sm font-bold uppercase tracking-widest block mb-2">Total visits</span>
+              <div class="flex items-end gap-2">
+                <span class="text-4xl font-extrabold text-dark group-hover:text-primary-600 transition-colors" id="stat-total">0</span>
+                <span class="text-slate-400 font-bold mb-1 text-sm">history</span>
+              </div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-md p-6 rounded-3xl border border-primary-100 shadow-sm hover:shadow-md transition-all bg-gradient-to-br from-primary-50/50 to-transparent">
+              <span class="text-primary-600 text-xs font-bold uppercase tracking-widest block mb-3">Quick Action</span>
+              <a href="search.html" class="inline-flex items-center gap-2 text-primary-700 font-bold hover:gap-3 transition-all">
+                Search Specialist →
+              </a>
+            </div>
+          </div>
+
+          <!-- Appointments List Card -->
+          <div class="bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-xl shadow-slate-200/50 border border-white overflow-hidden min-h-[500px]">
+            <div class="px-8 py-6 border-b border-slate-100 flex justify-between items-center bg-white/50">
+              <h2 class="text-xl font-extrabold text-dark tracking-tight">Active Appointments</h2>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Real-time update</span>
+              </div>
             </div>
             
-            <div id="appointments-list" class="space-y-4">
-              <div class="spinner mx-auto my-10"></div>
-            </div>
-
-            <div class="mt-12 flex justify-center">
-              <a href="search.html" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-8 rounded-xl transition-colors shadow-md">
-                + Book New Appointment
-              </a>
+            <div id="appointments-list" class="p-4 sm:p-8 space-y-6">
+              <div class="flex flex-col items-center justify-center py-20">
+                <div class="spinner w-12 h-12 border-4 border-t-primary-600 animate-spin rounded-full"></div>
+                <p class="text-slate-400 font-bold mt-4 uppercase tracking-widest text-xs">Syncing health records...</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-t border-slate-100 px-6 py-3 flex justify-around items-center shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+      <a href="user-dashboard.html" class="flex flex-col items-center gap-1 text-primary-600">
+        <div class="w-10 h-10 bg-primary-100 rounded-2xl flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        </div>
+        <span class="text-[10px] font-bold uppercase tracking-widest">Bookings</span>
+      </a>
+      <a href="search.html" class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary-600 transition-colors">
+        <div class="w-10 h-10 bg-slate-50 rounded-2xl flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+        <span class="text-[10px] font-bold uppercase tracking-widest">Search</span>
+      </a>
+      <button onclick="AuthService.logout()" class="flex flex-col items-center gap-1 text-slate-400 hover:text-red-500 transition-colors">
+        <div class="w-10 h-10 bg-slate-50 rounded-2xl flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+        </div>
+        <span class="text-[10px] font-bold uppercase tracking-widest">Logout</span>
+      </button>
     </div>
   </main>
 
@@ -104,6 +157,7 @@
 
       const user = AuthService.getCurrentUser();
       document.getElementById('user-name').textContent = user.name;
+      document.getElementById('welcome-name').textContent = user.name.split(' ')[0];
       document.getElementById('user-avatar').textContent = user.name.charAt(0).toUpperCase();
 
       await loadAppointments();
@@ -116,12 +170,21 @@
           const bookings = await DataService.getUserBookings(user.id);
           const listContainer = document.getElementById('appointments-list');
           
+          // Update Stats
+          const upcomingCount = (bookings || []).filter(b => b.status === 'upcoming').length;
+          document.getElementById('stat-upcoming').textContent = upcomingCount;
+          document.getElementById('appt-count-stat').textContent = upcomingCount;
+          document.getElementById('stat-total').textContent = (bookings || []).length;
+
           if (!bookings || bookings.length === 0) {
             listContainer.innerHTML = `
-              <div class="text-center py-12">
-                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">📅</div>
-                <h3 class="text-lg font-bold text-dark mb-2">No Appointments Yet</h3>
-                <p class="text-slate-500">You don't have any medical appointments scheduled.</p>
+              <div class="text-center py-20 bg-slate-50/50 rounded-3xl border border-dashed border-slate-200">
+                <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-sm">📅</div>
+                <h3 class="text-xl font-extrabold text-dark mb-2">No Appointments Yet</h3>
+                <p class="text-slate-500 max-w-xs mx-auto mb-8 font-medium">You don't have any medical appointments scheduled at the moment.</p>
+                <a href="search.html" class="inline-flex items-center gap-2 bg-primary-600 text-white font-bold py-3 px-8 rounded-2xl shadow-lg shadow-primary-500/30 hover:scale-105 transition-all">
+                  Book Your First Appointment
+                </a>
               </div>
             `;
             return;
@@ -130,31 +193,71 @@
           let html = '';
           bookings.forEach(b => {
             let statusBadge = '';
-            let cancelAction = '';
+            let actionBtn = '';
 
             if (b.status === 'upcoming') {
-              statusBadge = '<span class="px-3 py-1 bg-green-100 text-green-700 rounded-lg text-sm font-semibold">Upcoming</span>';
-              cancelAction = `<button onclick="cancelAppt('${b.id}')" class="text-red-500 hover:underline text-sm font-medium mt-4 sm:mt-0">Cancel</button>`;
+              statusBadge = `
+                <div class="flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-600 rounded-full text-xs font-bold border border-green-100 uppercase tracking-tighter">
+                  <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> Upcoming
+                </div>`;
+              actionBtn = `
+                <button onclick="cancelAppt('${b.id}')" class="w-full sm:w-auto px-4 py-2 text-red-500 hover:bg-red-50 rounded-xl text-sm font-bold transition-colors border border-transparent hover:border-red-100 text-center">
+                  Cancel Booking
+                </button>`;
             } else if (b.status === 'completed') {
-              statusBadge = '<span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-sm font-semibold">Completed</span>';
+              statusBadge = `
+                <div class="flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-500 rounded-full text-xs font-bold border border-slate-200 uppercase tracking-tighter">
+                  ✓ Completed
+                </div>`;
             } else {
-              statusBadge = '<span class="px-3 py-1 bg-red-100 text-red-700 rounded-lg text-sm font-semibold">Cancelled</span>';
+              statusBadge = `
+                <div class="flex items-center gap-1.5 px-3 py-1 bg-red-50 text-red-500 rounded-full text-xs font-bold border border-red-100 uppercase tracking-tighter">
+                  ✕ Cancelled
+                </div>`;
             }
 
             html += `
-              <div class="border border-slate-100 rounded-2xl p-5 hover:shadow-md transition-shadow flex flex-col sm:flex-row gap-6 bg-white shrink-0">
-                <img src="${b.doctorImage}" alt="${b.doctorName}" class="w-16 h-16 rounded-xl object-cover shrink-0">
-                <div class="flex-grow">
-                  <h3 class="font-bold text-dark text-lg">${b.doctorName}</h3>
-                  <p class="text-primary-600 text-sm font-medium mb-3">${b.doctorSpecialty}</p>
-                  <div class="flex flex-wrap gap-4 text-sm text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <div class="flex items-center gap-2 font-semibold">📅 ${b.date} &nbsp; ⏰ ${b.time}</div>
-                    ${b.patient_address ? `<div class="w-full text-slate-600 font-medium">📍 ${b.patient_address}</div>` : ''}
+              <div class="group bg-white rounded-3xl p-5 border border-slate-100 hover:border-primary-200 hover:shadow-xl hover:shadow-primary-500/5 transition-all duration-300 flex flex-col md:flex-row gap-6 relative overflow-hidden">
+                <!-- Status Background Glow -->
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-primary-500/5 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                
+                <div class="relative shrink-0">
+                  <img src="${b.doctorImage}" alt="${b.doctorName}" class="w-24 h-24 md:w-32 md:h-32 rounded-2xl object-cover shadow-sm bg-slate-50">
+                  <div class="absolute -bottom-2 -right-2 transform group-hover:scale-110 transition-transform">
+                    ${statusBadge}
                   </div>
                 </div>
-                <div class="flex flex-col justify-between items-start sm:items-end">
-                  ${statusBadge}
-                  ${cancelAction}
+
+                <div class="flex-grow">
+                  <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-4">
+                    <div>
+                      <h3 class="font-black text-dark text-xl group-hover:text-primary-600 transition-colors">${b.doctorName}</h3>
+                      <p class="text-primary-600 text-sm font-bold">${b.doctorSpecialty}</p>
+                    </div>
+                    <div class="flex flex-col gap-2 w-full md:w-auto">
+                      ${actionBtn}
+                      <a href="doctor.html?id=${b.id_doctor || ''}" class="text-center px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-600 rounded-xl text-sm font-bold transition-colors border border-slate-100">
+                        View Profile
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                    <div class="flex items-center gap-3 bg-slate-50/80 p-3 rounded-2xl border border-slate-100 group-hover:border-primary-100 transition-colors">
+                      <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-lg shadow-sm">📅</div>
+                      <div>
+                        <p class="text-[10px] uppercase tracking-widest font-black text-slate-400">Date & Time</p>
+                        <p class="text-sm font-bold text-dark">${b.date} &nbsp;•&nbsp; ${b.time}</p>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-slate-50/80 p-3 rounded-2xl border border-slate-100 group-hover:border-primary-100 transition-colors">
+                      <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-lg shadow-sm">📍</div>
+                      <div class="truncate">
+                        <p class="text-[10px] uppercase tracking-widest font-black text-slate-400">Location</p>
+                        <p class="text-sm font-bold text-dark truncate">${b.patient_address || 'At Clinic'}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             `;

@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doctor Profile - QwikDoc</title>
+  <title>Doctor Profile | Book Appointment - QwikDoc</title>
+  <meta name="description" content="View doctor profiles, read verified patient reviews, and book appointments online instantly. Find the best healthcare providers near you.">
+  <meta name="keywords" content="doctor profile, patient reviews, book medical appointment, healthcare provider search">
+  <link rel="manifest" href="manifest.json">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { theme: { extend: { colors: { primary: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1' }, dark: '#0f172a' }, fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
@@ -11,6 +14,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/png" href="logo/icon.png">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/seo-schema.js"></script>
 </head>
 <body class="bg-slate-50 text-dark flex flex-col min-h-screen">
 
@@ -170,6 +174,30 @@
         `;
         
         document.getElementById('profile-container').innerHTML = html;
+
+        // Inject Physician Schema for SEO
+        if (window.SEOSchema && doc) {
+          SEOSchema.inject({
+            "@context": "https://schema.org",
+            "@type": "Physician",
+            "name": doc.name,
+            "image": doc.image || '',
+            "medicalSpecialty": doc.specialization,
+            "description": `${doc.name} is a verified ${doc.specialization} with ${doc.experience} of experience.`,
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": doc.city,
+              "addressRegion": "AS",
+              "postalCode": doc.pin || '',
+              "addressCountry": "IN"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": doc.rating || "5.0",
+              "reviewCount": doc.reviews || "0"
+            }
+          });
+        }
       } catch(e) {
         document.getElementById('profile-container').innerHTML = '<div class="text-center py-20 text-red-500 font-bold">Error loading doctor profile. Ensure Supabase is connected.</div>';
       }
